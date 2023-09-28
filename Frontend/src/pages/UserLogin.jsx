@@ -1,17 +1,17 @@
 import React from 'react'
 import NavbarUser from '../components/NavbarUser'
-import LoginSectionUser from '../components/LoginSectionUser'
+import LoginSectionUser from '../components/User_Login_Section/LoginSectionUser'
+import { Link, Outlet } from 'react-router-dom';
 
-
-function UserlOGIN() {
+function UserLogin() {
   return (
     <>
     <NavbarUser/>
-    <LoginSectionUser/>
+    <Outlet/>
     
     
     </>
   )
 }
 
-export default UserlOGIN
+export default UserLogin

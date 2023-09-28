@@ -1,15 +1,32 @@
 
-const mongoose = require('mongoose');
-require('dotenv').config()  //env
-const {mongooseConnectionId,mongoosePassword} = process.env;
+const mongoose = require('mongoose')
+ require('dotenv').config()  //env
+ const {mongooseConnectionId,mongoosePassword} = process.env;
 
 const password = encodeURIComponent(mongoosePassword); //password URLencoding
-const connection = `mongodb+srv://aazacz:${password}${mongooseConnectionId}`;
+const connection = `mongodb+srv://aazachariah11:${password}${mongooseConnectionId}`;
+
+// const connectToMongoDB = async () => {
+    
+//       try {
+//             await mongoose.connect("mongodb://0.0.0.0:27017/UserDataCollection", {
+//               useNewUrlParser: true,
+//               useUnifiedTopology: true,
+//             });
+//             console.log("MongoDB Connected...");
+//           } catch (err) {
+//             console.log("Failed to Connect...", err);
+//           }
+
+
+
+//     };
 
 const connectToMongoDB = async () => {
       await mongoose.connect(connection,{
       useNewUrlParser:true,
-      useUnifiedTopology:true
+      useUnifiedTopology:true,
+     
   
 }).then(()=>{
       console.log(`Connected to MongoDB Atlas`);
@@ -18,7 +35,7 @@ const connectToMongoDB = async () => {
       console.log("Not Connected");
 })
 
-};
+};  
 
-module.exports = { connectToMongoDB };
- 
+
+module.exports = connectToMongoDB

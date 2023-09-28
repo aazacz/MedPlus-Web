@@ -1,29 +1,24 @@
 const express       = require("express");
 const cors          = require("cors");
-const cookieparser  = require('cookie-parser');
+// const cookieparser                                                              = require('cookie-parser');
 const jwt           = require("jsonwebtoken");
-const mongoDBConnect= require("../backend/config/mongooseConnect.js");
-const userRoute     = require('./router/userRoute.js');
-const adminRoute    = require("./router/adminRoute.js");
-const doctorRoute    = require("./router/doctorRoute.js");
+const connectToMongoDB = require("./Config/mongodbServer");
+const userRoute     = require('./Router/userRoute.js');
+const adminRoute    = require("./Router/adminRoute.js")
+const doctorRoute   = require("./Router/doctorRoute.js");
 const app           = express()
-require('dotenv').config();
+                      require('dotenv').config();
 const port          = process.env.PORT 
 
 
-
-
-
 app.use(cors())
-app.use(cookieparser())
 app.use(express.json())
-
-mongoDBConnect()
+connectToMongoDB()
 
 app.use('/', userRoute)
-app.use('/doctor', userRoute)
+app.use('/doctor', doctorRoute)
 app.use('/admin', adminRoute)
 
 
 
-app.listen(port,()=>console.log("Server is Running"))
+app.listen(port,()=>console.log("Backend Server is Running"))
