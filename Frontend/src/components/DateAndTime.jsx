@@ -7,9 +7,9 @@ function DateAndTime() {
     useEffect(() => {
         setInterval(() => {
             setTimeUpdate((TimeUpdate) => TimeUpdate + 1);
-          }, 1000);
+          }, );
       
-    }, [TimeUpdate])
+    }, [])
     
 
     

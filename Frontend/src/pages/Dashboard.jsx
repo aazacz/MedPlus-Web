@@ -24,8 +24,9 @@ const navigate= useNavigate()
         
         
     <Dashboard_Navbar_User/>
+    <div className='w-full '>
     <UserDashboardSidebar/>
-         
+    </div>
     </>
   )
 }

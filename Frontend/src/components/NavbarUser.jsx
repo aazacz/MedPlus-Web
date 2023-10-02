@@ -21,6 +21,7 @@ const NavbarUser = () => {
 
     return (
         <>
+
             {/* Navbar starts here   */}
             <div className='md:h-[145px] md:mx-12 '>
                 <nav className='p-5 w-full bg-lightgreen md:bg-transparent flex justify-between  px-10 overflow-x-hidden 

@@ -26,7 +26,7 @@ console.log(count);
     return (
         <>
             {/* Navbar starts here   */}
-            <div className='md:h-[105px] md:mx-12 bg-red'>
+            <div className='md:h-[105px] md:mx-12 '>
                 <nav className='p-5 w-full  bg-red md:bg-transparent flex justify-between  px-10 overflow-x-hidden 
                             md:flex md:items-center md:justify-between  md:w-full  md:px-4  '>
 

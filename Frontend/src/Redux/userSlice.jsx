@@ -24,7 +24,9 @@ export const loginslice = createSlice({
         // image: image,
       };
         }
-      }
+      },
+     
+      
     })
 
 

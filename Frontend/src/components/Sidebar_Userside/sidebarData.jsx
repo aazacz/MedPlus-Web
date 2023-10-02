@@ -11,32 +11,33 @@ const sidebarData=[
     {
         title:"Overview",
         icon:<AppsIcon/>,
-        link:"/Overview"
+        link:"/UserDashboard",
+        first:true
     },
     {
         title:"Lab Result",
         icon:<BiotechIcon/>,
-        link:"/labresult"
+        link:"/UserDashboard/labresult"
     },
     {
         title:"Previous Consultations",
         icon:<AssignmentIcon/>,
-        link:"/previous"
+        link:"/UserDashboard/previous"
     },
     {
         title:"Book New Consultation ",
         icon:<NoteAddIcon/>,
-        link:"/newconsultation"
+        link:"/UserDashboard/newconsultation"
     },
     {
         title:"Profile",
         icon:<PersonPinIcon/>,
-        link:"/Profile"
+        link:"/UserDashboard/Profile"
     },
     {
         title:"Logout",
         icon:<LogoutIcon/>,
-        link:"/logout"
+        link:"/UserDashboard/logout"
     },
 
 

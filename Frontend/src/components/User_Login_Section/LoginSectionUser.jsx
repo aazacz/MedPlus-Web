@@ -6,9 +6,10 @@ import axios from "axios"
 import { Link,useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../Redux/userSlice"
-
+import { useSignIn } from 'react-auth-kit'
 
 function LoginSectionUser() {
+    const signIn = useSignIn()
     const [LoginDetail,SetLoginDetail] = useState({email:"",password:""});
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -36,13 +37,14 @@ const HandleSubmit = (event)=>{
         console.log(res.data);
         console.log(res.data.token);
 
-        //saving the JWT token in local Storage
-        localStorage.setItem('login',JSON.stringify({
-                            login:true,
-                            token:res.data.token
-                                                    })  
-                            )
-
+        signIn({
+            token:res.data.token,
+            expiresIn:3600,
+            tokenType:"Bearer",
+            authState:{email:LoginDetail.email}
+        })
+console.log("sigin function runned");
+      
         //after saving the JWT token in local Storage,Storing the login details in Store
         if(localStorage.getItem('login')){
             const loginData = JSON.parse(localStorage.getItem("login"))
@@ -60,9 +62,6 @@ const HandleSubmit = (event)=>{
         }
         return res 
 
-    }).then((res)=>{
-        console.log("second Then Function ");
-        navigate('/UserDashboard') 
     })
     .catch(err=>console.log(err))
 

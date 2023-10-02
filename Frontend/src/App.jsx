@@ -8,12 +8,13 @@ import UserLogin from "./pages/UserlOGIN.JSX";
 import LoginSectionOtpVerify from "./components/User_Login_Section/LoginSectionOtpVerify";
 import Dashboard from "./pages/Dashboard"
 import UserSignup from "./pages/UserSignup";
-
+import Overview from "./components/Sidebar_Userside/overview";
+import Labresult from "./components/Sidebar_Userside/Labresult";
 
 const router = createBrowserRouter([
     {
       path: "/",
-      element: < Homepage/>,
+      element: <Homepage/>,
     },
     {
       path:'/signup',
@@ -31,6 +32,12 @@ const router = createBrowserRouter([
     {
       path: "/UserDashboard",
       element: <Dashboard/>,
+      children:[
+        {index:true, element:<Overview/>},
+        {path:'overview', element:<Overview/>},
+        {path:'labresult', element:<Labresult/>},
+
+      ]
      },
 
      {
