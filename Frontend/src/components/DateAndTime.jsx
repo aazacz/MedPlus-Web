@@ -16,8 +16,8 @@ function DateAndTime() {
     const date = new Date()
     const today =date.getMonth() + 1
 
-    const showdate = date.getFullYear()+ ':' + today + ":" + date.getDate();
-    const showTime = date.getHours()   + ':' + date.getMinutes()   + ":" + date.getSeconds();
+    const showdate = date.getFullYear() + ':' + today + ":" + date.getDate();
+    const showTime = date.getHours()    + ':' + date.getMinutes()   + ":" + date.getSeconds();
   
     return (
         <div className="flex flex-col justify-start">

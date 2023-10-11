@@ -5,31 +5,67 @@ import axios from "axios";
 
 //slice for login purpose
 export const loginslice = createSlice({
-    name: "loginUser",
-    initialState: [],
-    reducers: {
-        loginUser:(state,action)=>{
-            // state.name  = action.payload.name,
-            // state.email = action.payload.email,
-            // state.login = action.payload.login,
-            // state.token = action.payload.token
-            const { name, email, login, token} = action.payload;
+  name: "loginUser",
+  initialState: {
+    name: "",
+    email: "",
+    login: false,
+    token: "",
+    houseName: "",
+    city: "",
+    district: "",
+    state: "",
+    pincode: "",
+    mobile: "",
+    phone: "",
+    image: "",
+    otp:""
+  },
+  reducers: {
+    loginUser: (state, action) => {
     
+      const { name, email, login, token,otp,image } = action.payload;
+      console.log(name, email, login, token );
       return {
         ...state,
         name: name,
         email: email,
         login: login,
         token: token,
-        // image: image,
+        image: image,
+        otp:otp
       };
-        }
-      },
-     
-      
-    })
+    },
+    updateUserData: (state, action) => {
+      // Merge the updated fields into the state
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+  },
+
+
+})
+
+export const screensizeSlice = createSlice({
+  name: "screensize",
+  initialState: [],
+  reducers: {
+    size: (state, action) => {
+        return {
+        ...state,
+        size: action.payload.size,
+      }
+    }
+  }
+})
 
 
 
-    export const { loginUser } = loginslice.actions;
-    export const loginsliceReducer = loginslice.reducer;
+export const { updateUserData } = loginslice.actions;
+export const { loginUser } = loginslice.actions;
+export const loginsliceReducer = loginslice.reducer;
+
+export const { size } = screensizeSlice.actions;
+export const screensizeReducer = screensizeSlice.reducer 

@@ -1,7 +1,7 @@
 import React from 'react'
-import NavbarUser from '../components/NavbarUser'
-import { Link, Outlet } from 'react-router-dom';
-import SignupSectionUser from '../components/User_Login_Section/SignupSectionUser';
+import NavbarUser from '../components/Patient/NavbarUser'
+import SignupSectionUser from '../components/Patient/User_Login_Section/SignupSectionUser';
+
 
 function UserSignup() {
   return (

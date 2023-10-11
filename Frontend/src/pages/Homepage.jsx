@@ -1,6 +1,6 @@
 import React from 'react'
-import NavbarUser from '../components/NavbarUser'
-import HomePageBody from '../components/HomePageBodySec'
+import NavbarUser from '../components/Patient/NavbarUser'
+import HomePageBody from '../components/HomePageBody'
 
 const Homepage = () => {
   return (
