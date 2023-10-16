@@ -27,7 +27,7 @@ const sidebarData=[
     {
         title:"Book New Consultation ",
         icon:<NoteAddIcon/>,
-        link:"/UserDashboard/newconsultation"
+        link:"/UserDashboard/NewConsultation"
     },
     {
         title:"Profile",

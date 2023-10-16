@@ -3,8 +3,8 @@ const bcrypt    = require('bcrypt')
 const jwt       = require('jsonwebtoken')
 const User      = require('../Model/userDb.js')
 const { jwtsecret } = process.env;
-
-
+const otpGenerator      = require('otp-generator')
+const doctorDB  = require("../Model/doctorDb.js")
 
 const passwordHash = async (password) => {
     try {
@@ -90,12 +90,71 @@ const passwordHash = async (password) => {
     }
 
 
+    const getDoctors= async(req,res)=>{
+
+
+      try {
+        
+        const Doctors = await doctorDB.find().catch((err) => {
+          console.log("Error in finding" + err);  
+          })
+console.log(Doctors);
+          res.json({
+            status: "success",
+            Doctors
+           })
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+
+
+
+
+    const addDoctor = async (req, res) => {
+      try {
+        const OTP = otpGenerator.generate(9, {
+          digits:             true,
+          alphabets:          true,
+          upperCaseAlphabets: false,
+          lowerCaseAlphabets: true,
+          specialChars:       true,
+      });
+        const passwordbcrypt = await  passwordHash(OTP);
+        console.log(OTP);
+        console.log(req.body);
+        console.log(`${req.body.Username}@medplus.com`);
+    
+         const newUser = new doctorDB({
+           email: `${req.body.Username}@medplus.com`,
+           Name: req.body.Name,
+           password: passwordbcrypt,
+           Fellowship:req.body.Fellowship,
+           Username:req.body.Username,
+           Date:req.body.Date,
+           Department:req.body.Department,
+
+         })
+         console.log(newUser);
+        const newData = await newUser.save();
+        console.log(newData);
+    
+        res.json({ status: "success", message: "User registered successfully" });
+      } catch (error) {
+        console.error("Error during user registration:", error.message);
+        res.status(500).json({ status: "error", message: "Internal server error" });
+      }
+    };
+    
+
+
   module.exports = {
 
     login,
-    // signup,
-    getUser,
-    // updateProfile,
+    addDoctor,
+    getUser,  
+   getDoctors,
     // generateotp,
     // otplogin
   }

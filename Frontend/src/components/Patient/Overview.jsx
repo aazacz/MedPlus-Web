@@ -1,44 +1,16 @@
-import React, { Component, useRef, useState,useEffect,useLayoutEffect } from 'react';
+import React, { Component, useRef, useState,useEffect } from 'react';
 import {options,data} from './chart'
 import { Bar } from 'react-chartjs-2';
-import { useSelector, useDispatch } from "react-redux";
-import { size } from "../../../src/Redux/userSlice"
+import {  useDispatch } from "react-redux";
+
 
 function Overview() {
- const [divHeight, setDivHeight] = useState('auto')
+
  const [User, SetUser] = useState("User")
-  const dispatch = useDispatch()
-
-  useLayoutEffect(() => {
-    const parentDiv = document.getElementById("parentDiv");
-    const parentDivHeight = parentDiv.clientHeight
-    console.log("parentDivHeight    "+ parentDivHeight);
-
-    const setDynamicHeight = () => {
-      const pageHeight = parentDivHeight
-   
-      
-      console.log("pageHeight in function  " +pageHeight)
 
 
-      setDivHeight(`${pageHeight}px`)
-      dispatch(
-        size({
-          size:divHeight
-                  })
-        )
-    }
-    setDynamicHeight();
-    window.addEventListener('resize', setDynamicHeight);
 
-    // Cleanup by removing the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('resize', setDynamicHeight);
-    };
-  }, []);
-
-
-  return (
+    return (
     <>
       <div id='parentDiv' className=' flex flex-col items-center justify-center '>
         

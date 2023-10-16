@@ -10,35 +10,9 @@ function Customers() {
 
   const [Users, SetUsers] = useState([])
   const [User, SetUser] = useState("User")
-  const dispatch = useDispatch()
-
-  // useLayoutEffect(() => {
-  //   const parentDiv = document.getElementById("parentDiv");
-  //   const parentDivHeight = parentDiv.clientHeight
-  //   console.log("parentDivHeight    " + parentDivHeight);
-
-  //   const setDynamicHeight = () => {
-  //     const pageHeight = parentDivHeight
 
 
-  //     console.log("pageHeight in function  " + pageHeight)
-
-
-  //     setDivHeight(`${pageHeight}px`)
-  //     dispatch(
-  //       size({
-  //         size: divHeight
-  //       })
-  //     )
-  //   }
-  //   setDynamicHeight();
-  //   window.addEventListener('resize', setDynamicHeight);
-
-  //   // Cleanup by removing the event listener when the component unmounts
-  //   return () => {
-  //     window.removeEventListener('resize', setDynamicHeight);
-  //   };
-  // }, []);
+ 
 
 
 useEffect(() => {

@@ -10,8 +10,6 @@ userRoute.use(express.static("public"))
 
 
 
-
-
 const storage = multer.diskStorage({
     destination:(req,file,cb)=>{
         cb(null,"../Frontend/public")
@@ -29,15 +27,13 @@ const upload = multer({
 
 
 
-
-
-
 userRoute.post("/login", userController.login);
 userRoute.post("/signup", userController.signup);
 userRoute.post("/updateProfile",upload.single('image'), userController.updateProfile);
 userRoute.get("/getUser", userController.getUser);
 userRoute.post("/generateotp", userController.generateotp);
 userRoute.post("/otplogin", userController.otplogin);
+// userRoute.post("/createConsultation", userController.createConsultation);
 
   
 

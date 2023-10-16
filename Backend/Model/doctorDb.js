@@ -1,12 +1,7 @@
 const mongoose = require("mongoose");
 
-const DoctorSchema = mongoose.Schema({
-
-    name:{
-        type:String,
-        required:true
-    },
-    email:{
+const doctorSchema = new mongoose.Schema({
+  email:{
         type:String,
         required:true
     },
@@ -14,14 +9,27 @@ const DoctorSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    isAdmin:{
-        type:Number,
-        required:true,
-        default:0
-    }
+  Name: {
+    type: String,
+    required: true
+  },
+  Department: {
+    type: String,
+    required: true
+  },
+  Fellowship: {
+    type: String,
+    required: true
+  },
+  Date:[String], 
+    
+  
+  Username: {
+    type: String,
+    required: true
+  }
+});
 
-})
+const Doctor = mongoose.model("Doctor", doctorSchema);
 
-
-const Doctor= new mongoose.model("Doctor",DoctorSchema)
-module.exports=Doctor
+module.exports = Doctor;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import group8img from "../../../assets/group8.png"
 import LoginPhoto from "../../../assets/photoLoginSession.png"
 import logo from "../../../assets/MED+Logo.png"
-import axios from "axios"
+import axiosInstance from "../../../Services/Axiosinstance"
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../../Redux/userSlice"
@@ -19,7 +19,7 @@ function LoginSectionUser() {
 
     const otpgenerate = (event)=>{
         event.preventDefault()
-        axios.post("http://localhost:6002/generateotp", email)
+        axiosInstance.post("generateotp", email)
         .then((res) => {
             dispatch(
                 loginUser({
@@ -39,19 +39,19 @@ function LoginSectionUser() {
         event.preventDefault()
         console.log("LoginDetails are " + LoginDetail)
 
-        axios.post("http://localhost:6002/login", LoginDetail)
+       axiosInstance.post("/login", LoginDetail)
         .then((res) => {
           console.log(res);
           console.log(res.data);
           console.log(res.data.token);
       
           if (res.data.token) {
-            signIn({
-              token: res.data.token,
-              expiresIn: 3600,
-              tokenType: "Bearer",
-              authState: { email: LoginDetail.email }
-            });                                                                                                                               
+              signIn({
+                token: res.data.token,
+                expiresIn: 3600,
+                tokenType: "Bearer",
+                authState: { email: LoginDetail.email,role:"User" }
+              });                                                                                                                               
             console.log("signIn function executed");
           }
       

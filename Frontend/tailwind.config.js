@@ -1,12 +1,18 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors')
 export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'custom-conic': 'conic-gradient(at_left, rgb(134, 239, 172), rgb(253, 224, 71), rgb(249, 168, 212))',
+      },
+    },
     colors: {
+      ...colors,
       transparent: 'transparent',
       current: 'currentColor',
       'white': '#ffffff',

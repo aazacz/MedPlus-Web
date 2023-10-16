@@ -1,12 +1,10 @@
-import React, { Component, useRef, useMemo, useState, useLayoutEffect } from 'react';
-import { options, data } from './chart'
-import { Bar } from 'react-chartjs-2';
+import React, {useMemo, useState } from 'react';
+
 import { useDispatch } from "react-redux";
-import { size } from "../../Redux/userSlice"
 import { useTable, usePagination } from 'react-table'
 import Mock_DATA from '../MOCK_DATA.json'
 import { COLUMNS } from '../Patient/column'
-import {useAuthUser ,useAuthHeader} from 'react-auth-kit'
+import {useAuthUser} from 'react-auth-kit'
 
 function PreviousConsultation() {
 
@@ -39,39 +37,11 @@ function PreviousConsultation() {
 
 
 
-  const [divHeight, setDivHeight] = useState('auto')
+
   const [User, SetUser] = useState("User")
   const dispatch = useDispatch()
 
-  useLayoutEffect(() => {
-    const parentDiv = document.getElementById("parentDiv");
-    const parentDivHeight = parentDiv.clientHeight
-    console.log("parentDivHeight    " + parentDivHeight);
-
-    const setDynamicHeight = () => {
-      const pageHeight = parentDivHeight
-
-
-      console.log("pageHeight in function  " + pageHeight)
-
-
-      setDivHeight(`${pageHeight}px`)
-      dispatch(
-        size({
-          size: divHeight
-        })
-      )
-    }
-    setDynamicHeight();
-    window.addEventListener('resize', setDynamicHeight);
-
-    // Cleanup by removing the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('resize', setDynamicHeight);
-    };
-  }, []);
-
-
+  
   return (
     <>
       <div id='parentDiv' className=' flex flex-col items-center  h-[560px] '>

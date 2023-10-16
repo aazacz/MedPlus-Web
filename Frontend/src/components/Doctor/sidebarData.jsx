@@ -11,7 +11,7 @@ const sidebarData=[
     {
         title:"Overview",
         icon:<AppsIcon/>,
-        link:"/UserDashboard",
+        link:"/DoctorDashboard",
         first:true
     },
     {
@@ -20,15 +20,11 @@ const sidebarData=[
         link:"/UserDashboard/labresult"
     },
     {
-        title:"Previous Consultations",
+        title:"Consultations",
         icon:<AssignmentIcon/>,
         link:"/UserDashboard/previous"
     },
-    {
-        title:"Book New Consultation ",
-        icon:<NoteAddIcon/>,
-        link:"/UserDashboard/newconsultation"
-    },
+    
     {
         title:"Profile",
         icon:<PersonPinIcon/>,
@@ -38,6 +34,8 @@ const sidebarData=[
 
 
 ]
+
+
 
  export default sidebarData
 

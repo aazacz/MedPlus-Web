@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 // import "./UserDashboardSidebarcss.css"
 
 function DashboardSidebar(props) {
-    const {sidebarData} = props
+    const {sidebarData,bg} = props
 
     const size = useSelector(state => state.screen)
     console.log("size" + size);
@@ -47,10 +47,9 @@ function DashboardSidebar(props) {
     return (
         <>
 
+            <div style={{height: '100%'}} className="flex flex-row "    >
 
-            <div className="flex flex-row  flex-1"    >
-
-                <div id='menu' className='relative  h-[calc(2*screen)]  w-[250px]  bg-lightgreen flex  justify-end transition-all md:transition-non ease-in  duration-500'>
+                <div  className={`relative  h-[calc(2*screen)]  w-[250px]  bg-${bg}  flex  justify-end transition-all md:transition-non ease-in  duration-500`}>
                     <ul className='w-[220px] '>
                         <BiMenu className='w-[30px] h-[30px] md:hidden block' id='menu' onClick={event => menubar(event)} />
 
@@ -86,7 +85,11 @@ function DashboardSidebar(props) {
                 </div>
 
 
-                <div className='w-full flex-1'>         <Outlet />       </div>
+                <div className='w-full flex-1'>   
+                
+                      <Outlet />       
+                      
+                      </div>
             </div>
         </>
     );

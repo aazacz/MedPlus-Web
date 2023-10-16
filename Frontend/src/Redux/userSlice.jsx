@@ -1,5 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {persistStore} from "redux-persist"
+import storage from 'redux-persist/lib/storage'
 import axios from "axios";
+
+  
+
+// const persistConfig={ // data to be saved as persist in the local storage
+// key:'persist-store',
+// storage
+// }
 
 
 

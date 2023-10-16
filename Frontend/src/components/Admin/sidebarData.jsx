@@ -21,7 +21,7 @@ const sidebarData=[
     {
         title:"Doctors",
         icon:<FaUserDoctor/>,
-        link:"/adminDashboard/previous"
+        link:"/adminDashboard/DoctorsList"
     },
     {
         title:"Customers ",

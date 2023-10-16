@@ -2,7 +2,7 @@ export const COLUMNS=[
 
     {
         Header:"Doctor Name	",
-        accessor:'Doctor Name'
+        accessor:'Name'
     },
     {
         Header:"Department",
@@ -13,7 +13,7 @@ export const COLUMNS=[
         accessor:'Date'
     },
     {
-        Header:"Next Consultation",
-        accessor:"Next Consultation"
+        Header:"email",
+        accessor:"email"
     }
 ]

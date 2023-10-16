@@ -12,4 +12,5 @@ doctorRoute.post("/signup", doctorController.signup);
 
 
 
+
 module.exports = doctorRoute

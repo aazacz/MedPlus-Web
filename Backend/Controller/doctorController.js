@@ -21,28 +21,30 @@ const passwordHash = async (password) => {
 const login = async (req, res) => {
 
     try {
+        console.log("");
         console.log(req.body.email);
         const tokenProducer = req.body.email
 
+        if (!req.body.email || !req.body.password) {
+        return res.json({ message: "Enter Email And Password" });
+}
         console.log("1")
-        const user = await Doctor.findOne({ email: req.body.email }).catch((err) => {
-            console.log("Error in finding" + err);
-        })
-        console.log("finded user" + user);
+        const user = await Doctor.findOne({ email: req.body.email })
+            .catch((err) => {
+            return res.json({ message: "Email doesnt match" })
+               })
+        
 
         if (!user) {  //if user not found in DB
-            return res.json({ message: "Email or password doesnt match" })
+            return res.json({ message: "Email doesnt match" })
         }
-        console.log("1");
-        const passwordmatch = await bcrypt.compare(req.body.password, user.password)//compare the password
-
+       
+        const passwordmatch = await bcrypt.compare(req.body.password, user.password)
+        console.log("2")
         if (passwordmatch) {
-            const token = jwt.sign({ _id: tokenProducer }, jwtsecret)
-            console.log(token);
-
+            const token = jwt.sign({ _id: user._id }, jwtsecret)
             const userVer = jwt.verify(token, jwtsecret)
-            console.log(userVer);
-            console.log("password verified");
+            console.log("3")
             res.json({
                 status: "success",
                 name: user.name,
@@ -51,12 +53,20 @@ const login = async (req, res) => {
                 email: tokenProducer
             })
         }
-console.log("Password Not matched");
+        else {
+         console.log("4")
+
+         return res.json({
+                status: "failed",
+                message: "Password is incorrect"
+            });
+        }
+
     
     }
     catch (error) {
         console.log(error);
-        res.status(500).json({ status: "error", error: "Server error" });
+        res.status(500).json({ status: "error", message: "Server error" });
     }
 
 }

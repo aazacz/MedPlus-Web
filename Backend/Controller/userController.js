@@ -6,6 +6,7 @@ const { jwtsecret } = process.env;
 const otpGenerator      = require('otp-generator')
 const nodemailer        = require('nodemailer')
 const Otp               = require('../Model/otpdb.js')
+const consultation      = require('../Model/consultation')
 
 const passwordHash = async (password) => {
   try {
@@ -31,25 +32,28 @@ const login = async (req, res) => {
     const tokenProducer = req.body.email
 
     console.log("1")
+    
     const user = await User.findOne({ email: req.body.email }).catch((err) => {
-      console.log("Error in finding" + err);
+      return res.json({message:"Email doesnt match"})
+     
     })
+    
     console.log("finded user" + user);
 
     if (!user) {  //if user not found in DB
-      return res.json({ message: "Email or password doesnt match" })
+      return res.json({ message: "Email doesnt match" })
     }
 
-    const passwordmatch = await bcrypt.compare(req.body.password, user.password)//compare the password
+    const passwordmatch = await bcrypt.compare(req.body.password, user.password)
 
     if (passwordmatch) {
-      // , { expiresIn: "1 hour" }
+
       const token = jwt.sign({ _id: tokenProducer }, jwtsecret)
       console.log(token);
 
       const userVer = jwt.verify(token, jwtsecret)
       console.log(userVer);
-console.log("password verified");
+      console.log("password verified");
       res.json({
         status: "success",
         name: user.name,
@@ -57,6 +61,12 @@ console.log("password verified");
         login: true,
         email: tokenProducer
       })
+    }
+    else{
+      return  res.json({
+        status: "failed",
+        message: "Password is incorrect"
+    });
     }
 
 
@@ -97,7 +107,6 @@ const signup = async (req, res) => {
 
 const getUser = async (req,res)=>{
 try {
-
   const encodedValue = req.query.data;
   console.log("encodedValue");
   console.log(encodedValue);
@@ -210,18 +219,45 @@ try {
 }
 }
 
+// const createConsultation = async (req,res)=>{
+//   try {
+//     console.log("create consultation");
+//     const newDocument = new consultation({
+//       Name: req.body.Name,
+//       Department: req.body.Department,
+//       Doctor: req.body.Doctor,
+//       Date: req.body.Date,
+//     }); 
+    
+//     // Save the document to the database
+//     newDocument.save((err, savedDocument) => {
+//       if (err) {
+//         console.error(err);
+//       } else {
+//         console.log('Document saved:', savedDocument);
+//       }
+//   })
 
+
+//   res.json({message:"Success"})
+
+// }
+//   catch(err){
+//     console.log(err); 
+//   }
+
+// }
 
 
 const generateotp = async (req,res)=>{
   try {
 
-    const OTP = otpGenerator.generate(4, {
+    const OTP = otpGenerator.generate(8, {
       digits:             true,
       alphabets:          false,
-      upperCaseAlphabets: false,
+      upperCaseAlphabets: true,
       lowerCaseAlphabets: false,
-      specialChars:       false,
+      specialChars:       true,
   });
 
   const transporter = nodemailer.createTransport({
@@ -329,5 +365,6 @@ module.exports = {
   getUser,
   updateProfile,
   generateotp,
-  otplogin
+  otplogin,
+  // createConsultation
 }
