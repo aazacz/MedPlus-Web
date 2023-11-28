@@ -124,7 +124,7 @@
 
       return (
         <>
-          <form  onSubmit={HandleSubmit} action=''>
+          <form    onSubmit={HandleSubmit} action=''>
           <div id='parentDiv' className='flex flex-col items-center w-3/4 h-[660px]'>
             <h1 className='text-2xl font-bold mb-4'>Profile</h1>
             {error && <div style={{ color: 'red' }}>{error}</div>}

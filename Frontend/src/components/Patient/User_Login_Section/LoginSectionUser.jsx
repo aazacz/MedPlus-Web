@@ -2,19 +2,24 @@ import React, { useState, useEffect } from 'react'
 import group8img from "../../../assets/group8.png"
 import LoginPhoto from "../../../assets/photoLoginSession.png"
 import logo from "../../../assets/MED+Logo.png"
-import axiosInstance from "../../../Services/Axiosinstance"
+import axiosInstance from "../../../Services/AxiosInstance/User/AxiosinstanceUser"
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../../Redux/userSlice"
-import { useSignIn } from 'react-auth-kit'
+import Cookies from 'js-cookie';
+
 
 function LoginSectionUser() {
 
-    const signIn = useSignIn()
+
+
     const [LoginDetail, SetLoginDetail] = useState({ email: "", password: "" });
     const [email,Setemail] = useState({email:""}) 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+
+
 
 
     const otpgenerate = (event)=>{
@@ -46,13 +51,11 @@ function LoginSectionUser() {
           console.log(res.data.token);
       
           if (res.data.token) {
-              signIn({
-                token: res.data.token,
-                expiresIn: 3600,
-                tokenType: "Bearer",
-                authState: { email: LoginDetail.email,role:"User" }
-              });                                                                                                                               
-            console.log("signIn function executed");
+              
+              const jwtToken = res.data.token 
+              Cookies.set('UserjwtCookie', jwtToken, { expires: 7 })        
+
+              console.log("Sign In Function Executed");
           }
       
           return res; 

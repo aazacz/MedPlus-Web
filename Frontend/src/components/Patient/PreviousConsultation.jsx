@@ -4,11 +4,9 @@ import { useDispatch } from "react-redux";
 import { useTable, usePagination } from 'react-table'
 import Mock_DATA from '../MOCK_DATA.json'
 import { COLUMNS } from '../Patient/column'
-import {useAuthUser} from 'react-auth-kit'
 
 function PreviousConsultation() {
 
-  const auth = useAuthUser()
 
 
   const columns = useMemo(() => COLUMNS, [])
@@ -51,7 +49,6 @@ function PreviousConsultation() {
 
         </div>
         <div>
-            Hello {auth().name}
         </div>
 
       

@@ -21,14 +21,13 @@ const passwordHash = async (password) => {
 const login = async (req, res) => {
 
     try {
-        console.log("");
-        console.log(req.body.email);
+       
         const tokenProducer = req.body.email
 
         if (!req.body.email || !req.body.password) {
         return res.json({ message: "Enter Email And Password" });
 }
-        console.log("1")
+       
         const user = await Doctor.findOne({ email: req.body.email })
             .catch((err) => {
             return res.json({ message: "Email doesnt match" })
@@ -42,9 +41,15 @@ const login = async (req, res) => {
         const passwordmatch = await bcrypt.compare(req.body.password, user.password)
         console.log("2")
         if (passwordmatch) {
-            const token = jwt.sign({ _id: user._id }, jwtsecret)
-            const userVer = jwt.verify(token, jwtsecret)
-            console.log("3")
+
+            const secure = {
+                _id: tokenProducer,
+                role:"Doctor"
+                          }
+        
+            const token = jwt.sign(secure, process.env.jwtsecretDoctor)
+            console.log("3   Token produced and response sent")
+
             res.json({
                 status: "success",
                 name: user.name,
@@ -104,11 +109,28 @@ const signup = async (req, res) => {
 };
 
 
+const checkAuth = async (req, res) => {
+    try {
+      if (req.role === "Doctor") {
+        console.log("req.role is Doctor");
+        res.status(200).json({ message: "Authorised" });
+      } else {
+        res.status(403).json({ message: "Access Denied" });
+      }
+    } catch (error) {
+      console.error("Error in checkAuth:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
+  
+
+
 
 
 
 module.exports = {
 
     login,
-    signup
+    signup,
+    checkAuth
 }

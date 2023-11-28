@@ -31,7 +31,7 @@ const sidebarData=[
     {
         title:"Banner Management",
         icon:<FaMicrosoft/>,
-        link:"/adminDashboard/Profile"
+        link:"/adminDashboard/BannerManage"
     },
     {
         title:"Sales Report",

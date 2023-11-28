@@ -1,50 +1,43 @@
-import React, { useState, useEffect,useLayoutEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
+import { Outlet } from 'react-router-dom'; // Import useLocation
 import DateAndTime from '../components/DateAndTime'
 import Dashboard_Navbar_User from '../components/Patient/Dashboard_Navbar_User'
 import DashboardSidebar from '../components/Dashboard_sidebar/DashboardSidebar'
 import sidebarData from '../components/patient/sidebarData'
-import { useAuthUser, useIsAuthenticated } from "react-auth-kit"; 
+import { motion } from "framer-motion"
+
+
+
+
 
 function Dashboard() {
-    const navigate = useNavigate()
-    const auth = useAuthUser();
-    // const userRole = auth.authState ? auth.authState.role : null
-    //checking if the user already logged in using the JWT token
-    const isAuthenticated = useIsAuthenticated()
 
-  
-  
-    // useLayoutEffect(() => {
-    //   // Check if the user is authenticated
-    //   if(auth.authState && auth.authState.role === 'User'){
-    //   if (isAuthenticated()) {
-    //     console.log("logged in");
-    //     navigate("/userDashboard") // Redirect to UserDashboard
-
-    //   }          else navigate("/login") // Redirect to UserDashboard
-
-    //   }
-    //   else {
-    //     console.log("userrole not found");
-    //     navigate("/login") // Redirect to UserDashboard
-
-    //   }  
-      
-
-    // }, [])
-
+ 
   return (
-    <div className="h-screen flex flex-col">
-      <div className="mx-5 flex justify-between h-[100px] items-center">
+    <>
+
+      <div className="absolute z-10 w-full px-7   flex justify-between h-[100px] items-center">
         <Dashboard_Navbar_User />
         <DateAndTime />
       </div>
 
-      <div className="flex-1 ">
-        <DashboardSidebar  sidebarData={sidebarData} bg={"lightgreen"} />
-      </div>
-    </div>
+<section className='flex flex-1' >
+
+          <DashboardSidebar sidebarData={sidebarData} bg={"lightgreen"} />
+        
+
+        <div className='w-full h-screen flex-1 pt-28'>
+    
+       <Outlet />
+     
+
+
+   
+
+        </div>
+      
+ </section>
+      </>
   );
 }
 

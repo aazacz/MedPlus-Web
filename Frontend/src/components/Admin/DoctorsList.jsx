@@ -1,20 +1,41 @@
 import React, { useMemo, useState,useEffect,useLayoutEffect } from 'react'
 import { useTable, usePagination, useFilters } from 'react-table'
-
 import { Link,useNavigate} from 'react-router-dom'; // Import useLocation
-import axiosInstance from '../../Services/Axiosinstance';
-
+import axiosInstance from '../../Services/AxiosInstance/User/AxiosinstanceUser';
+import {MySwal} from "../sweetalert"
 function DoctorsList() {
 
   const  navigate = useNavigate()
   const [Mock_DATA, setMockData] = useState([]);
 
 
+
+  const AddDoctor =()=>{
+  
+    MySwal.fire({
+      title: 'Add a new doctor',
+      text: "Please thorougly check and input the details!",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Create New'
+    }).then((result) => {
+      if (result.isConfirmed) {
+      navigate('/adminDashboard/AddDoctor')
+      }
+    })
+  }
+ 
+
   useEffect(()=>{
     axiosInstance.get('/admin/getDoctors').then((res)=>{
       console.log(res.data.Doctors);
       setMockData(res.data.Doctors)
     })
+
+
+
   },[])
 
   const COLUMNS = [
@@ -74,9 +95,9 @@ function DoctorsList() {
 
       <div className=' my-5 w-full text-start px-6'>  
 
-      <Link to={"/adminDashboard/AddDoctor"} >
-          <button  className='pt-[-10px] w-[120px] text-gray-100 rounded-md  h-8 bg-lightgreen'>Add Doctor <span className='text-[20px]'>+</span></button>
-      </Link>
+    
+          <button  onClick={AddDoctor} className='pt-[-10px] w-[120px] text-gray-100 rounded-md  h-8 bg-lightgreen'>Add Doctor <span className='text-[20px]'>+</span></button>
+      
 
       </div>
 
@@ -121,7 +142,7 @@ function DoctorsList() {
             </strong>{' '}
           </span>
           <span>
-            | Go to page:{' '}
+          | Go to page:{' '}
             <input
               type="number"
               defaultValue={pageIndex + 1}

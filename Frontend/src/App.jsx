@@ -2,8 +2,9 @@
 import React from 'react';
 import './App.css'
 import {  RouterProvider } from "react-router-dom";
-import router from './Routes';
+import Routers from './Routes';
 import { Toaster } from 'react-hot-toast';  // for showing small alerts
+import RouterComponent from './Routes';
 
 
 
@@ -11,8 +12,9 @@ function App() {
   return (
     <>
       <Toaster  position="top-center"  reverseOrder={false} />
-
-      <RouterProvider router={router} />
+   
+      {/* <RouterProvider router={router} /> */}
+    <Routers/>
     </>
   )
 }

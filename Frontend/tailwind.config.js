@@ -35,6 +35,8 @@ export default {
       'lightPinkDark': '#504E4E',
     },
   },
-  plugins: [],
+  plugins: [
+   
+  ],
 }
 

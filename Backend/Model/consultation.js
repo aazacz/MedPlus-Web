@@ -18,6 +18,6 @@ const consultationSchema = new mongoose.Schema({
   },
 });
 
-const consultation = mongoose.model('consultation', consultationSchema);
+const consultation = new mongoose.model('Consultation', consultationSchema);
 
 module.exports = consultation ;

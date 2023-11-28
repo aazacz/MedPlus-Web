@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react'
 import group8img from "../../../assets/group8.png"
 import LoginPhoto from "../../../assets/photoLoginSession.png"
 import logo from "../../../assets/MED+Logo.png"
-import axiosInstance from "../../../Services/Axiosinstance"
+import axiosInstanceDoctor from '../../../Services/AxiosInstance/Doctor/axiosInstanceDoctor'
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../Redux/userSlice"
-import { useSignIn } from 'react-auth-kit'
 import toast from 'react-hot-toast';  // for showing small alerts
-
+import Cookies from "js-cookie"
 
 function LoginSectionDoctor() {
-    const signIn = useSignIn()
+
     const [LoginDetail, SetLoginDetail] = useState({ email: "", password: "" });
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -25,7 +24,7 @@ function LoginSectionDoctor() {
         console.log("LoginDetails are " + LoginDetail)
         
         //calling axios
-        axiosInstance.post("doctor/login", LoginDetail).then((res) => {
+        axiosInstanceDoctor.post("/login", LoginDetail).then((res) => {
            
         console.log(res);
             if(res.data.message === "Email doesnt match"){
@@ -46,13 +45,12 @@ function LoginSectionDoctor() {
             }
             
             if (res.data.token) {
-                signIn({
-                    token: res.data.token,
-                    expiresIn: 3600,
-                    tokenType: "Bearer",
-                    authState: { email: LoginDetail.email,role:"Doctor" }
-                })
-                console.log("signin function runned");
+                console.log("LOGIN function in fontend running");
+
+              const jwtToken = res.data.token
+              Cookies.set('DoctorjwtCookie', jwtToken, { expires:7 })
+              
+              console.log("LOGIN function in fontend runned");
                 //after saving the JWT token in Session Storage,Storing the login details in Store
                 dispatch(
                     loginUser({
@@ -62,6 +60,7 @@ function LoginSectionDoctor() {
                         token: res.data.token
                     })
                 )
+                console.log("LOGIN details stored in the cookie");
 
                 navigate("/DoctorDashboard")
             }

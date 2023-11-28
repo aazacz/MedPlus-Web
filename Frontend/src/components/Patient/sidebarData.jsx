@@ -14,12 +14,7 @@ const sidebarData=[
         link:"/UserDashboard",
         first:true
     },
-    // {
-    //     title:"Lab Result",
-    //     icon:<BiotechIcon/>,
-    //     link:"/UserDashboard/labresult"
-    // },
-    {
+       {
         title:"Previous Consultations",
         icon:<AssignmentIcon/>,
         link:"/UserDashboard/previous"

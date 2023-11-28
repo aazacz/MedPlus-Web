@@ -12,27 +12,11 @@ function LoginSectionAdmin() {
 
     const signIn = useSignIn()
     const [LoginDetail, SetLoginDetail] = useState({ email: "", password: "" });
-    const [email,Setemail] = useState({email:""}) 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
 
-    // const otpgenerate = (event)=>{
-    //     event.preventDefault()
-    //     axios.post("http://localhost:6002/generateotp", email)
-    //     .then((res) => {
-    //         dispatch(
-    //             loginUser({
-    //             email:email,
-    //             otp:res.data.OTP
-    //             })
-    //           );
-    //         navigate(`verifyotp`, { OTP: res.data.OTP });
-    //     }).catch((error)=>{
-    //         console.log(error);
-    //     })
-    // }
-
+   
 
 
     const HandleSubmit = (event) => {

@@ -2,11 +2,11 @@ const express   = require("express")
 const bcrypt    = require('bcrypt')
 const jwt       = require('jsonwebtoken')
 const User      = require('../Model/userDb.js')
-const { jwtsecret } = process.env;
+const { jwtsecretUser,EXPIRES_IN } = process.env;
 const otpGenerator      = require('otp-generator')
 const nodemailer        = require('nodemailer')
 const Otp               = require('../Model/otpdb.js')
-const consultation      = require('../Model/consultation')
+const consultation      = require('../Model/consultation.js')
 
 const passwordHash = async (password) => {
   try {
@@ -22,6 +22,22 @@ const verifyToken = (token) => {
   const userVer = jwt.verify(token, "mynameisabhilashabinzachariah")
   console.log(userVer);
 }
+
+
+
+const checkAuth = async (req, res) => {
+  try {
+    if (req.role === "User") {
+      res.status(200).json({ message: "Authorised" });
+    } else {
+      res.status(403).json({ message: "Access Denied" });
+    }
+  } catch (error) {
+    console.error("Error in checkAuth:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 
 
 
@@ -48,12 +64,21 @@ const login = async (req, res) => {
 
     if (passwordmatch) {
 
-      const token = jwt.sign({ _id: tokenProducer }, jwtsecret)
+
+      const secure = {
+        _id: tokenProducer,
+        role:"User"
+      }
+
+
+      const token = jwt.sign(secure, jwtsecretUser,{expiresIn:EXPIRES_IN})
       console.log(token);
 
-      const userVer = jwt.verify(token, jwtsecret)
+      const userVer = jwt.verify(token, jwtsecretUser)
       console.log(userVer);
       console.log("password verified");
+ 
+
       res.json({
         status: "success",
         name: user.name,
@@ -146,6 +171,7 @@ try {
         console.log(req.body.name);
         console.log(req.body.email);
       
+        
         const updatedata = {
           name: req.body.name,
           email: req.body.email,
@@ -161,18 +187,11 @@ try {
 
 
         const userdata = await User.updateOne({ email: req.body.email }, { $set: updatedata })
+        const {name,email,houseName,city,district,state,pincode,mobile,phone} = req.body
 
         return res.json({
           Status: "success",
-          name: req.body.name,
-          email: req.body.email,
-          houseName: req.body.houseName,
-          city: req.body.city,
-          district: req.body.district,
-          state: req.body.state,
-          pincode: req.body.pincode,
-          mobile: req.body.mobile,
-          phone: req.body.phone,
+          name, email, houseName, city, district, state, pincode, mobile, phone,
           image: req.file.filename
           });
         
@@ -196,20 +215,13 @@ try {
           };
 
           const userdata = await User.updateOne({ email: req.body.email }, { $set: updatedata })
+         
+          const {  name, email,houseName,city,district,state, pincode, mobile, phone} = req.body;
+          
           return res.json({
             Status: "success",
-            name: req.body.name,
-            email: req.body.email,
-            houseName: req.body.houseName,
-            city: req.body.city,
-            district: req.body.district,
-            state: req.body.state,
-            pincode: req.body.pincode,
-            mobile: req.body.mobile,
-            phone: req.body.phone,
-            image: userdata.image
-            });
-
+            name, email, houseName, city, district, state, pincode, mobile, phone, image: userdata.image,
+          });
 
         }
 
@@ -219,34 +231,34 @@ try {
 }
 }
 
-// const createConsultation = async (req,res)=>{
-//   try {
-//     console.log("create consultation");
-//     const newDocument = new consultation({
-//       Name: req.body.Name,
-//       Department: req.body.Department,
-//       Doctor: req.body.Doctor,
-//       Date: req.body.Date,
-//     }); 
+const createConsultation = async (req,res)=>{
+  try {
+    console.log("create consultation");
+
+    const {Name,Department,Doctor,Date} = req.body
+
+    console.log(Name,Date);
+    console.log(Department,Doctor);
+
+    const newDocument = new consultation({
+      Name: req.body.Name,
+      Department: req.body.Department,
+      Doctor: req.body.Doctor,
+      Date: req.body.Date,
+    }); 
     
-//     // Save the document to the database
-//     newDocument.save((err, savedDocument) => {
-//       if (err) {
-//         console.error(err);
-//       } else {
-//         console.log('Document saved:', savedDocument);
-//       }
-//   })
+    // Save the document to the database
+    newDocument.save()
 
 
-//   res.json({message:"Success"})
+  res.json({message:"Success"})
 
-// }
-//   catch(err){
-//     console.log(err); 
-//   }
+}
+  catch(err){
+    console.log(err); 
+  }
 
-// }
+}
 
 
 const generateotp = async (req,res)=>{
@@ -289,6 +301,7 @@ return res.json({status:"success",OTP:OTP})
 
 }
 }
+
 
 const otplogin= async(req,res)=>{
 
@@ -366,5 +379,6 @@ module.exports = {
   updateProfile,
   generateotp,
   otplogin,
-  // createConsultation
+  checkAuth,
+  createConsultation
 }

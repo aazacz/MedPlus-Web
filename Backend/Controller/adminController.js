@@ -36,21 +36,25 @@ const passwordHash = async (password) => {
 
       if(user.isAdmin===1){
 
+
+        
+        const secure = {
+            _id: tokenProducer,
+            role:"Admin"
+                       }
          
-          // , { expiresIn: "1 hour" }
-          const token = jwt.sign({ _id: tokenProducer }, jwtsecret)
+          const token = jwt.sign(secure, process.env.jwtsecretAdmin)
           console.log(token);
     
-          const userVer = jwt.verify(token, jwtsecret)
-          console.log(userVer);
-    console.log("password verified");
-          res.json({
-            status: "success",
-            name: user.name,
-            token,
-            login: true,
-            email: tokenProducer
-          })
+        
+          console.log("password verified");
+            res.json({
+              status: "success",
+              name: user.name,
+              token,
+              login: true,
+              email: tokenProducer
+            })
         
       }
   

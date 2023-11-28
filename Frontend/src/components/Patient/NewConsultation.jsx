@@ -3,11 +3,11 @@ import { useDispatch } from "react-redux";
 import { size } from "../../Redux/userSlice"
 import { useAuthUser } from 'react-auth-kit'
 import { useFormik } from 'formik';
-import axiosInstance from '../../Services/Axiosinstance';
+import axiosInstanceUser from '../../Services/AxiosInstance/User/AxiosinstanceUser';
 
 function NewConsultation() {
 
-  const auth = useAuthUser()
+
 
   const [User, SetUser] = useState("User")
   const dispatch = useDispatch()
@@ -23,7 +23,8 @@ function NewConsultation() {
       Date: ''
     },
     onSubmit: values => {
-      axiosInstance.post('/createConsultation',values).then(()=>{
+      console.log("Form values:", values)
+      axiosInstanceUser.post('/createConsultation',values).then(()=>{
 
 
       })
@@ -41,19 +42,19 @@ function NewConsultation() {
             <div className='text-left text-xl w-full text-black text-opacity-80  font-medium' >Book New Consultation</div>
             <div className='flex mt-5'>
               <div className='flex flex-col items-start'>
-                <label className='' htmlFor="email">Name</label>
+                <label className='' htmlFor="Name">Name</label>
 
                 <input
                   className='px-3 w-[300px] h-8  border-[1px] rounded-md'
-                  id="email"
-                  name="email"
+                  id="Name"
+                  name="Name"
                   type="text"
                   onChange={formik.handleChange}
-                  value={formik.values.email}
+                  value={formik.values.Name}
                 />
               </div>
               <div className='flex flex-col items-start'>
-                <label className='ml-5 mr-3' htmlFor="email">Department</label>
+                <label className='ml-5 mr-3' htmlFor="Department">Department</label>
 
                 <input
                   className='px-3 ml-4 w-[300px] h-8  border-[1px] rounded-md'
@@ -71,10 +72,10 @@ function NewConsultation() {
 
               <div className='flex flex-col items-start'>
 
-                <label className='mr-3' htmlFor="email">Doctor</label>
+                <label className='mr-3' htmlFor="Doctor">Doctor</label>
                 <input
                   className='px-3 w-[300px] h-8  border-[1px] rounded-md'
-                  id="Department"
+                  id="Doctor"
                   name="Doctor"
                   type="text"
                   onChange={formik.handleChange}
@@ -83,15 +84,15 @@ function NewConsultation() {
               </div>
 
               <div className='flex flex-col items-start'>
-                <label className='ml-5 mr-3' htmlFor="date">Date</label>
+                <label className='ml-5 mr-3' htmlFor="Date">Date</label>
 
                 <input
                   className='px-3 ml-4 w-[300px] h-8 border-[1px] rounded-md'
-                  id="date"
-                  name="date"
+                  id="Date"
+                  name="Date"
                   type="date" // Use type="date" for date input
                   onChange={formik.handleChange}
-                  value={formik.values.date}
+                  value={formik.values.Date}
                 />
               </div>
 

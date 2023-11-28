@@ -4,20 +4,15 @@ import App from './App.jsx'
 import './index.css'
 import { Provider } from "react-redux"
 import store from './Redux/store.jsx'
-import { AuthProvider } from "react-auth-kit"
-
+import { BrowserRouter } from 'react-router-dom'
 ReactDOM.createRoot(document.getElementById('root')).render(
 
   <React.StrictMode>
-    <AuthProvider
-      authType={'cookie'}
-      authName={"user_auth_cookie"}
-      cookieDomain={window.location.hostname}
-      cookieSecure={false} >
+    <BrowserRouter>
       <Provider store={store}>
         <App />
       </Provider>
-    </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>,
 
 )
