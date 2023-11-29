@@ -5,6 +5,12 @@ import Dashboard_Navbar_User from '../components/Patient/Dashboard_Navbar_User'
 import DashboardSidebar from '../components/Dashboard_sidebar/DashboardSidebar'
 import sidebarData from '../components/patient/sidebarData'
 import { motion } from "framer-motion"
+import {  Route, Routes } from "react-router-dom";
+import Overview from '../components/Patient/Overview';
+import PreviousConsultation from '../components/Patient/PreviousConsultation';
+import ProfileUser from '../components/Patient/ProfileUser';
+import Labresult from '../components/Patient/Labresult';
+import NewConsultation from '../components/Patient/NewConsultation';
 
 
 
@@ -38,6 +44,7 @@ function Dashboard() {
       
  </section>
       </>
+
   );
 }
 
