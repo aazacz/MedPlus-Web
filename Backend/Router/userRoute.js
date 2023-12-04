@@ -43,6 +43,7 @@ userRoute.get("/getUser", userController.getUser);
 userRoute.post("/generateotp", userController.generateotp);
 userRoute.post("/otplogin", userController.otplogin);
 userRoute.post("/createConsultation", userController.createConsultation);
+userRoute.post("/checkEmailDuplicates", userController.checkEmailDuplicates);
 
   
 

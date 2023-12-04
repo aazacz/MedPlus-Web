@@ -1,12 +1,12 @@
-const express   = require("express")
-const bcrypt    = require('bcrypt')
-const jwt       = require('jsonwebtoken')
-const User      = require('../Model/userDb.js')
-const { jwtsecretUser,EXPIRES_IN } = process.env;
-const otpGenerator      = require('otp-generator')
-const nodemailer        = require('nodemailer')
-const Otp               = require('../Model/otpdb.js')
-const consultation      = require('../Model/consultation.js')
+const express = require("express")
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const User = require('../Model/userDb.js')
+const { jwtsecretUser, EXPIRES_IN } = process.env;
+const otpGenerator = require('otp-generator')
+const nodemailer = require('nodemailer')
+const Otp = require('../Model/otpdb.js')
+const consultation = require('../Model/consultation.js')
 
 const passwordHash = async (password) => {
   try {
@@ -48,12 +48,12 @@ const login = async (req, res) => {
     const tokenProducer = req.body.email
 
     console.log("1")
-    
+
     const user = await User.findOne({ email: req.body.email }).catch((err) => {
-      return res.json({message:"Email doesnt match"})
-     
+      return res.json({ message: "Email doesnt match" })
+
     })
-    
+
     console.log("finded user" + user);
 
     if (!user) {  //if user not found in DB
@@ -67,17 +67,17 @@ const login = async (req, res) => {
 
       const secure = {
         _id: tokenProducer,
-        role:"User"
+        role: "User"
       }
 
 
-      const token = jwt.sign(secure, jwtsecretUser,{expiresIn:EXPIRES_IN})
+      const token = jwt.sign(secure, jwtsecretUser, { expiresIn: EXPIRES_IN })
       console.log(token);
 
       const userVer = jwt.verify(token, jwtsecretUser)
       console.log(userVer);
       console.log("password verified");
- 
+
 
       res.json({
         status: "success",
@@ -87,11 +87,11 @@ const login = async (req, res) => {
         email: tokenProducer
       })
     }
-    else{
-      return  res.json({
+    else {
+      return res.json({
         status: "failed",
         message: "Password is incorrect"
-    });
+      });
     }
 
 
@@ -108,7 +108,7 @@ const login = async (req, res) => {
 const signup = async (req, res) => {
   try {
     const { email, name, password } = req.body;
-    const passwordbcrypt = await  passwordHash(password);
+    const passwordbcrypt = await passwordHash(password);
 
     console.log(email, name, password);
 
@@ -130,244 +130,272 @@ const signup = async (req, res) => {
 
 
 
-const getUser = async (req,res)=>{
-try {
-  const encodedValue = req.query.data;
-  console.log("encodedValue");
-  console.log(encodedValue);
-  const user = await User.findOne({ email: encodedValue }).catch((err) => {
-  console.log("Error in finding" + err);
-  })
-console.log(user);
-
- 
-res.json({
-  status: "success",
-  name: user?.name,
-  email: user?.email,
-  houseName: user?.houseName,
-  city: user?.city,
-  district: user?.district,
-  state: user?.state,
-  pincode: user?.pincode,
-  mobile: user?.mobile,
-  phone: user?.phone,
-  image: user?.image,
- })
+const getUser = async (req, res) => {
+  try {
+    const encodedValue = req.query.data;
+    console.log("encodedValue");
+    console.log(encodedValue);
+    const user = await User.findOne({ email: encodedValue }).catch((err) => {
+      console.log("Error in finding" + err);
+    })
+    console.log(user);
 
 
-} catch (error) {
-  console.log(error);
-}
- 
-}
+    res.json({
+      status: "success",
+      name: user?.name,
+      email: user?.email,
+      houseName: user?.houseName,
+      city: user?.city,
+      district: user?.district,
+      state: user?.state,
+      pincode: user?.pincode,
+      mobile: user?.mobile,
+      phone: user?.phone,
+      image: user?.image,
+    })
 
 
-const updateProfile = async(req,res)=>{
+  } catch (error) {
+    console.log(error);
+  }
 
-try {
-  if(req.file){
-        console.log(req.file.filename);
-        console.log(req.body.name);
-        console.log(req.body.email);
-      
-        
-        const updatedata = {
-          name: req.body.name,
-          email: req.body.email,
-          houseName: req.body.houseName,
-          city: req.body.city,
-          district: req.body.district,
-          state: req.body.state,
-          pincode: req.body.pincode,
-          mobile: req.body.mobile,
-          phone: req.body.phone,
-          image: req.file.filename,
-        };
-
-
-        const userdata = await User.updateOne({ email: req.body.email }, { $set: updatedata })
-        const {name,email,houseName,city,district,state,pincode,mobile,phone} = req.body
-
-        return res.json({
-          Status: "success",
-          name, email, houseName, city, district, state, pincode, mobile, phone,
-          image: req.file.filename
-          });
-        
-        }
-        else{
-      
-          console.log(req.body.name);
-          console.log(req.body.email);
-        
-          const updatedata = {
-            name: req.body.name,
-            email: req.body.email,
-            houseName: req.body.houseName,
-            city: req.body.city,
-            district: req.body.district,
-            state: req.body.state,
-            pincode: req.body.pincode,
-            mobile: req.body.mobile,
-            phone: req.body.phone,
-
-          };
-
-          const userdata = await User.updateOne({ email: req.body.email }, { $set: updatedata })
-         
-          const {  name, email,houseName,city,district,state, pincode, mobile, phone} = req.body;
-          
-          return res.json({
-            Status: "success",
-            name, email, houseName, city, district, state, pincode, mobile, phone, image: userdata.image,
-          });
-
-        }
-
-} catch (error) {
-  console.log(error);
-  
-}
 }
 
-const createConsultation = async (req,res)=>{
+
+const updateProfile = async (req, res) => {
+
+  try {
+    if (req.file) {
+      console.log(req.file.filename);
+      console.log(req.body.name);
+      console.log(req.body.email);
+
+
+      const updatedata = {
+        name: req.body.name,
+        email: req.body.email,
+        houseName: req.body.houseName,
+        city: req.body.city,
+        district: req.body.district,
+        state: req.body.state,
+        pincode: req.body.pincode,
+        mobile: req.body.mobile,
+        phone: req.body.phone,
+        image: req.file.filename,
+      };
+
+
+      const userdata = await User.updateOne({ email: req.body.email }, { $set: updatedata })
+      const { name, email, houseName, city, district, state, pincode, mobile, phone } = req.body
+
+      return res.json({
+        Status: "success",
+        name, email, houseName, city, district, state, pincode, mobile, phone,
+        image: req.file.filename
+      });
+
+    }
+    else {
+
+      console.log(req.body.name);
+      console.log(req.body.email);
+
+      const updatedata = {
+        name: req.body.name,
+        email: req.body.email,
+        houseName: req.body.houseName,
+        city: req.body.city,
+        district: req.body.district,
+        state: req.body.state,
+        pincode: req.body.pincode,
+        mobile: req.body.mobile,
+        phone: req.body.phone,
+
+      };
+
+      const userdata = await User.updateOne({ email: req.body.email }, { $set: updatedata })
+
+      const { name, email, houseName, city, district, state, pincode, mobile, phone } = req.body;
+
+      return res.json({
+        Status: "success",
+        name, email, houseName, city, district, state, pincode, mobile, phone, image: userdata.image,
+      });
+
+    }
+
+  } catch (error) {
+    console.log(error);
+
+  }
+}
+
+const createConsultation = async (req, res) => {
   try {
     console.log("create consultation");
 
-    const {Name,Department,Doctor,Date} = req.body
+    const { Name, Department, Doctor, Date } = req.body
 
-    console.log(Name,Date);
-    console.log(Department,Doctor);
+    console.log(Name, Date);
+    console.log(Department, Doctor);
 
     const newDocument = new consultation({
       Name: req.body.Name,
       Department: req.body.Department,
       Doctor: req.body.Doctor,
       Date: req.body.Date,
-    }); 
-    
+    });
+
     // Save the document to the database
     newDocument.save()
 
 
-  res.json({message:"Success"})
+    res.json({ message: "Success" })
 
-}
-  catch(err){
-    console.log(err); 
+  }
+  catch (err) {
+    console.log(err);
   }
 
 }
 
 
-const generateotp = async (req,res)=>{
+const generateotp = async (req, res) => {
   try {
 
     const OTP = otpGenerator.generate(8, {
-      digits:             true,
-      alphabets:          false,
+      digits: true,
+      alphabets: false,
       upperCaseAlphabets: true,
       lowerCaseAlphabets: false,
-      specialChars:       true,
-  });
+      specialChars: true,
+    });
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
         user: "abhilashabinz@gmail.com",
         pass: "otjhcsnvnhknygrh",
-    },
-});
+      },
+    });
 
-var mailOptions = {
-  from:   "abhilashabinz@gmail.com",
-  to:     req.body.email,
-  subject:"OTP VERIFICATION",
-  text:   "PLEASE ENTER THE OTP FOR LOGIN " + OTP,
-};
-transporter.sendMail(mailOptions, function (error, info) { });
-console.log(OTP);
+    var mailOptions = {
+      from: "abhilashabinz@gmail.com",
+      to: req.body.email,
+      subject: "OTP VERIFICATION",
+      text: "PLEASE ENTER THE OTP FOR LOGIN " + OTP,
+    };
+    transporter.sendMail(mailOptions, function (error, info) { });
+    console.log(OTP);
 
-const otp    = new Otp({ email: req.body.email, otp: OTP });
-const salt   = await bcrypt.genSalt(10);
-otp.otp      = await bcrypt.hash(otp.otp, salt);
-const result = await otp.save();
+    const otp = new Otp({ email: req.body.email, otp: OTP });
+    const salt = await bcrypt.genSalt(10);
+    otp.otp = await bcrypt.hash(otp.otp, salt);
+    const result = await otp.save();
 
 
-return res.json({status:"success",OTP:OTP})
-} catch (error) {
+    return res.json({ status: "success", OTP: OTP })
+  } catch (error) {
     console.log(error.message)
 
-}
-}
-
-
-const otplogin= async(req,res)=>{
-
-try {
-   const LoginDetail = req.body;
-  console.log(LoginDetail.email);
-  const tokenProducer = LoginDetail.email
-
-  console.log("1")
-  const emailObject = { email: `${LoginDetail.email}` };
-
-  const user = await User.findOne(emailObject).catch((err) => {
-    console.log("Error in finding" + err);
-  })
-  console.log("finded user" + user);
-
-  if (!user) {  //if user not found in DB
-    return res.json({ message: "Email or password doesnt match" })
   }
-    const userOtp  =   await Otp.findOne({email:LoginDetail.email}).catch((error)=>{
+}
 
-      console.log("error in the otp finding"+error);
-      return res.json({message:"OTP Expired"})
+
+const otplogin = async (req, res) => {
+
+  try {
+    const LoginDetail = req.body;
+    console.log(LoginDetail.email);
+    const tokenProducer = LoginDetail.email
+
+    console.log("1")
+    const emailObject = { email: `${LoginDetail.email}` };
+
+    const user = await User.findOne(emailObject).catch((err) => {
+      console.log("Error in finding" + err);
     })
- 
-  if (user) {
-    console.log("user matched")
-    const otpmatch         = await bcrypt.compare(LoginDetail.otp, userOtp.otp)
-    console.log(otpmatch);
-    if (otpmatch) {
-      console.log("OTP Matched")
-   
-      const token = jwt.sign({ _id: tokenProducer }, jwtsecret)
-      console.log(token);
-      const userVer = jwt.verify(token, jwtsecret)
-      console.log(userVer);
-      console.log("password verified");
-      res.json({
-        status: "success",
-        name: user.name,
-        token,
-        login: true,
-        email: tokenProducer 
-      })
-    } else { 
-      res.json({
-        status: "failed",
-        name: "user.name",
-        token:"",
-        login: false,
-        email: ""
-      })
-            
-    } 
+    console.log("finded user" + user);
+
+    if (!user) {  //if user not found in DB
+      return res.json({ message: "Email or password doesnt match" })
+    }
+    const userOtp = await Otp.findOne({ email: LoginDetail.email }).catch((error) => {
+
+      console.log("error in the otp finding" + error);
+      return res.json({ message: "OTP Expired" })
+    })
+
+    if (user) {
+      console.log("user matched")
+      const otpmatch = await bcrypt.compare(LoginDetail.otp, userOtp.otp)
+      console.log(otpmatch);
+      if (otpmatch) {
+        console.log("OTP Matched")
+
+        const token = jwt.sign({ _id: tokenProducer }, jwtsecret)
+        console.log(token);
+        const userVer = jwt.verify(token, jwtsecret)
+        console.log(userVer);
+        console.log("password verified");
+        res.json({
+          status: "success",
+          name: user.name,
+          token,
+          login: true,
+          email: tokenProducer
+        })
+      } else {
+        res.json({
+          status: "failed",
+          name: "user.name",
+          token: "",
+          login: false,
+          email: ""
+        })
+
+      }
+
+    }
+
+
+
+  } catch (error) {
+    console.log(error);
+    console.log(error.message);
+  }
+
+
 
 }
 
 
- 
-} catch (error) {
-  console.log(error);
-  console.log(error.message);
-}
 
+/*-------------------------------- checking for Email Duplication before signup --------------------------------------*/
+const checkEmailDuplicates = async (req, res) => {
+  try {
+    console.log(req.body);
+    console.log(req.body.email);
+    const userExists = await User.find({ email: req.body.email })
+    console.log(userExists);
 
+    const documentsExist = userExists.length > 0;
+    console.log(documentsExist.toString());
 
+    if (documentsExist) {
+      console.log("if function worked,,Email Already Exists");
+      res.json({ status: false, message: "Email Already Exists" })
+    }
+    else {
+      console.log("Else function Worked, Email not found");
+      res.json({ status: true, message: "Email not found" })
+    }
+
+  } catch (error) {
+    console.log(error.message);
+    throw error
+  }
 }
 
 
@@ -380,5 +408,6 @@ module.exports = {
   generateotp,
   otplogin,
   checkAuth,
-  createConsultation
+  createConsultation,
+  checkEmailDuplicates
 }
