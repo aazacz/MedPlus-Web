@@ -11,7 +11,6 @@ const consultation = require('../Model/consultation.js')
 const passwordHash = async (password) => {
   try {
     const passwordHash = await bcrypt.hash(password, 5);
-    console.log(passwordHash);
     return passwordHash;
   } catch (error) {
     console.log(error.message);
@@ -20,7 +19,6 @@ const passwordHash = async (password) => {
 
 const verifyToken = (token) => {
   const userVer = jwt.verify(token, "mynameisabhilashabinzachariah")
-  console.log(userVer);
 }
 
 
@@ -44,17 +42,14 @@ const checkAuth = async (req, res) => {
 const login = async (req, res) => {
 
   try {
-    console.log(req.body.email);
+
     const tokenProducer = req.body.email
-
-    console.log("1")
-
     const user = await User.findOne({ email: req.body.email }).catch((err) => {
-      return res.json({ message: "Email doesnt match" })
+    return res.json({ message: "Email doesnt match" })
 
     })
 
-    console.log("finded user" + user);
+
 
     if (!user) {  //if user not found in DB
       return res.json({ message: "Email doesnt match" })
@@ -76,7 +71,7 @@ const login = async (req, res) => {
 
       const userVer = jwt.verify(token, jwtsecretUser)
       console.log(userVer);
-      console.log("password verified");
+    
 
 
       res.json({
@@ -375,25 +370,21 @@ const otplogin = async (req, res) => {
 /*-------------------------------- checking for Email Duplication before signup --------------------------------------*/
 const checkEmailDuplicates = async (req, res) => {
   try {
-    console.log(req.body);
-    console.log(req.body.email);
+   
     const userExists = await User.find({ email: req.body.email })
-    console.log(userExists);
-
     const documentsExist = userExists.length > 0;
-    console.log(documentsExist.toString());
-
+  
     if (documentsExist) {
-      console.log("if function worked,,Email Already Exists");
+    
       res.json({ status: false, message: "Email Already Exists" })
     }
     else {
-      console.log("Else function Worked, Email not found");
+     
       res.json({ status: true, message: "Email not found" })
     }
 
   } catch (error) {
-    console.log(error.message);
+    
     throw error
   }
 }

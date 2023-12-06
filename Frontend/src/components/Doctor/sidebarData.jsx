@@ -11,24 +11,24 @@ const sidebarData=[
     {
         title:"Overview",
         icon:<AppsIcon/>,
-        link:"/DoctorDashboard",
+        link:"/doctordashboard",
         first:true
     },
     {
         title:"Lab Result",
         icon:<BiotechIcon/>,
-        link:"/UserDashboard/labresult"
+        link:"/doctordashboard/labresult"
     },
     {
         title:"Consultations",
         icon:<AssignmentIcon/>,
-        link:"/UserDashboard/previous"
+        link:"/doctordashboard/previous"
     },
     
     {
         title:"Profile",
         icon:<PersonPinIcon/>,
-        link:"/UserDashboard/Profile"
+        link:"/doctordashboard/Profile"
     },
     
 

@@ -51,7 +51,6 @@ const Routers = () => {
           <Route path='verifyotp' element={<LoginSectionOtpVerify />} />
         </Route>
 
-        {/* <Route path='/UserDashboard' element={<PrivateRoute user={"user"} > <Dashboard /> </PrivateRoute>} /> */}
         <Route path='/UserDashboard' element={<PrivateRoute user={"user"}> <Dashboard /> </PrivateRoute>}>
           <Route index element={<Overview />} />
           <Route path='previous' element={<PreviousConsultation />} />
@@ -68,10 +67,12 @@ const Routers = () => {
 
         <Route path='/doctor/signup' element={<DoctorSignup />} />
 
-        <Route path='/DoctorDashboard' element={<PrivateRouterDoctor />}>
-          <Route index element={<DoctorDashboard />} />
+        <Route path='/doctordashboard' element={ <DoctorDashboard /> }>
+          <Route index element={<DoctorOverview />} />
           <Route path='Overview' element={<DoctorOverview />} />
           <Route path='labresult' element={<Labresult />} />
+          <Route path='previous' element={<div>previous Consultations loaded</div>} />
+          <Route path='profile' element={<div>profile loaded</div>} />
         </Route>
 
         <Route path='/admin' element={<AdminLogin />}>

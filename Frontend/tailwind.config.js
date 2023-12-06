@@ -27,7 +27,7 @@ export default {
       'bubble-gum': '#ff77e9',
       'bermuda': '#78dcca',
       'cyan': '#06b6d4',
-      'lightgreen': '#67C25E',
+      'lightgreen': '#033C4B',
       'lightgreen2': '#5db054',
       'lightgreen3': '#d1fae5',
       'darkgreen': '#008480',

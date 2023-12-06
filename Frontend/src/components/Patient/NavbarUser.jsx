@@ -7,7 +7,6 @@ const NavbarUser = () => {
 const navigate = useNavigate()
     function menubar(event) {
         let list = document.querySelector('ul');
-        // this is a terneray condition which determines if the button is clicked then the id is changed to the opposite and two new classess are added     
         event.target.id === 'menu' ?
 
             (event.target.id = "close",
@@ -35,11 +34,6 @@ const navigate = useNavigate()
                         <span className=' text-[9px]  font-sans  text-white md:text-black lg:text-black flex md:text-base '>Where Healing matters...</span>
                     </div>
 
-                    <div className=' md:w-[250px] md:h-[40px]  md:flex md:justify-end md:items-center md:border-2 md:rounded md:border-lightgreen group '>
-                        <input type="search" className='md:w-[150px] md:h-[40px] outline-none bg-transparent ' placeholder='' />
-                        <i className="hidden md:block fa-solid fa-magnifying-glass hover:text-lg hover:duration-500"></i>
-                        <p className='hidden md:block px-2 text-lg hover:text-xl  hover:duration-500'>Search </p>
-                    </div>
 
 
                     <ul className='md:h-12 flex  flex-col text-white  bg-lightgreen  z-[99]  absolute  left-0  w-full  opacity-0   top-[-400px]   transition md:transition-non ease-in  duration-500 
@@ -48,7 +42,7 @@ const navigate = useNavigate()
                     
                           '>
 
-                        <li className='mx-4 cursor-pointer text-left my-2 md:my-auto  min-[320px]:hover-bg-lightgreen2 '> <a href="#" className="text-lg hover:text-red duration-300">HOME </a></li>
+                        <li className='mx-4 cursor-pointer text-left my-2 md:my-auto  min-[320px]:hover-bg-lightgreen2 '> <a href="/" className="text-lg hover:text-red duration-300">HOME </a></li>
                         <li className='mx-4 cursor-pointer text-left my-2 md:my-auto '> <a href="#" className="text-lg hover:text-red duration-300">ADMIN</a></li>
                         <li className='mx-4 cursor-pointer text-left my-2 md:my-auto '> <a href="#" className="text-lg hover:text-red duration-300">ABOUT</a></li>
                         <li className='mx-4 cursor-pointer text-left my-2 md:my-auto '> <button onClick={()=>navigate("/login")} className='hidden md:block bg-cyan text-white font-[Arial] px-6 py-2 mx-4 hover:bg-red rounded duration-200'> Login </button></li>
